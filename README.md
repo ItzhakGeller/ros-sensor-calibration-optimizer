@@ -1,4 +1,4 @@
-# 🔬 ROS Sensor Calibration Optimizer
+# 🔬 Runout Sensor Calibration Optimizer
 
 **Advanced sensor calibration analysis tool for optimizing measurement accuracy through systematic calibration range testing**
 
@@ -8,16 +8,16 @@
 
 ## 🎯 Project Overview
 
-This project performs comprehensive analysis of different calibration range configurations for ROS (Robotic Operating System) sensors to identify optimal calibration points that maximize measurement accuracy. Through systematic testing of 7 different calibration scenarios, the tool determines the best distance points for sensor calibration.
+This project performs comprehensive analysis of different calibration range configurations for Runout Sensors to identify optimal calibration points that maximize measurement accuracy. Through systematic testing of 7 different calibration scenarios, the tool determines the best distance points for sensor calibration.
 
 ## 🚀 Purpose & Impact
 
 **Objective**: Determine the optimal calibration range (distance measurement points) that provides the most accurate sensor readings in the target operating zone (1.5-3.0mm).
 
 **Business Value**: 
-- Reduces sensor measurement errors by up to 7.8x
-- Improves manufacturing quality control
-- Optimizes sensor performance for critical applications
+- Improves sensor accuracy by 44% over standard calibration (1,2,3mm)
+- Achieves up to 7.9x better performance vs worst configurations
+- Optimizes runout sensor performance for critical applications
 
 ## Key Files
 
@@ -31,34 +31,51 @@ This project performs comprehensive analysis of different calibration range conf
 - **`confluence_calibration_report.xml`** - XML formatted report for Confluence integration
 - **`README.md`** - This documentation file
 
-## 📊 Analysis Process & Visualizations
+## 📊 Analysis Process & Results
 
 The analysis follows a systematic approach from raw data processing to optimal calibration identification:
 
 ### 1. Data Preprocessing & Quality Control
-**`sensor_jumps_detection.png`** - **Step Detection Algorithm**  
-From continuous sensor measurements, automated detection identifies discrete ROS position changes during data collection. This critical preprocessing step ensures each measurement corresponds to a known distance position, enabling accurate calibration point extraction.
+
+From continuous sensor measurements, automated detection identifies discrete runout sensor position changes during data collection. This critical preprocessing step ensures each measurement corresponds to a known distance position, enabling accurate calibration point extraction.
+
+![Step Detection](./outputs/sensor_jumps_detection.png)
+*Automated detection of runout sensor position changes from continuous sensor data*
 
 ### 2. Raw Data Analysis & Interpolation  
-**`raw_data_analysis.png`** - **Sensor Response Curves**  
-**`sensor_measurements_plot.png`** - **Individual Sensor Characteristics**  
-Display original sensor measurements across the full distance range (0.1-4.0mm) with mathematical interpolation. Shows the exponential decay behavior that characterizes ROS sensor response.
+
+Original sensor measurements across the full distance range (0.1-4.0mm) with mathematical interpolation. Shows the exponential decay behavior that characterizes runout sensor response.
+
+![Raw Data Analysis](./outputs/raw_data_analysis.png)
+*Sensor response curves showing exponential decay characteristics with mathematical interpolation*
 
 ### 3. Mathematical Model Selection
+
 Multiple calibration functions were tested (linear, polynomial, logarithmic, exponential). **The exponential decay model (`S = A × exp(-B × x) + C`) demonstrated superior performance** across all sensors and was selected for the optimization study.
 
 ### 4. Calibration Scenario Comparison
-**`comprehensive_summary_table.png`** - **Complete Results Matrix**  
-**`calibration_summary_table.png`** - **Performance Rankings**  
+
 Comprehensive comparison of all 7 calibration point configurations showing both raw statistical data and performance scores. Clear identification of Far-1 as the optimal configuration.
 
+![Results Summary](./outputs/comprehensive_summary_table.png)
+*Complete performance comparison showing Far-1 configuration achieving optimal accuracy*
+
+![Performance Rankings](./outputs/calibration_summary_table.png)
+*Condensed performance rankings across all calibration scenarios*
+
 ### 5. Target Range Error Analysis
-**`error_analysis_detailed.png`** - **Calibration Accuracy in Operating Zone (1.5-3.0mm)**  
-Detailed RMS error analysis focused on the sensors' intended operating range. Demonstrates why Far-1 configuration achieves superior performance where accuracy matters most.
+
+Detailed RMS error analysis focused on the sensors' intended operating range (1.5-3.0mm). Demonstrates why Far-1 configuration achieves superior performance where accuracy matters most.
+
+![Error Analysis](./outputs/error_analysis_detailed.png)  
+*RMS error analysis in target operating range showing optimal Far-1 configuration performance*
 
 ### 6. Performance Metrics & Validation
-**`calibration_range_analysis_comprehensive.png`** - **RMS Error and R² Correlation Analysis**  
+
 Final validation showing both RMS error (measurement accuracy) and R² values (model fit quality) across all calibration scenarios.
+
+![Performance Metrics](./outputs/calibration_range_analysis_comprehensive.png)
+*RMS Error and R² correlation analysis across all calibration configurations*
 
 > 🔍 **[View All Analysis Results →](./outputs/)**
 
@@ -78,25 +95,26 @@ The analysis tests 7 different calibration point configurations:
 
 🏆 **Optimal Configuration: Far-1 (1.5-2.25-3.0mm)**
 - **Average RMS Error: 16.1 ± 3.7 μm**
-- **7.8x improvement** over worst-performing configuration
+- **1.44x improvement** over standard reference (1,2,3mm: 23.2 μm)
+- **7.9x better** than worst-performing configuration (Wide-1: 126.9 μm)
 - All calibration points within target operating range (1.5-3.0mm)
 - Consistent performance across all sensor types
 
 ### Performance Comparison
-| Configuration | Avg RMS Error (μm) | Performance Rank |
-|--------------|-------------------|------------------|
-| **Far-1** ⭐ | **16.1 ± 3.7** | **#1** |
-| Far-2 | 21.8 ± 5.0 | #2 |
-| Mid | 22.2 ± 8.6 | #3 |
-| Standard | 23.2 ± 7.4 | #4 |
-| Wide-2 | 53.8 ± 11.6 | #5 |
-| Short | 35.8 ± 7.2 | #6 |
-| Wide-1 | 126.9 ± 25.5 | #7 |
+| Configuration | Calibration Points (mm) | Avg RMS Error (μm) | vs Standard |
+|--------------|------------------------|-------------------|-------------|
+| **Far-1** ⭐ | **1.5, 2.25, 3.0** | **16.1 ± 3.7** | **1.44x better** |
+| Far-2 | 1.5, 2.5, 3.5 | 21.8 ± 5.0 | 1.06x better |
+| Mid | 1.5, 2.15, 2.8 | 22.2 ± 8.6 | 1.05x better |
+| **Standard** 📍 | **1.0, 2.0, 3.0** | **23.2 ± 7.4** | **Reference** |
+| Short | 0.5, 1.5, 2.5 | 35.8 ± 7.2 | 1.54x worse |
+| Wide-2 | 0.5, 1.75, 3.0 | 53.8 ± 11.6 | 2.32x worse |
+| Wide-1 | 0.5, 2.0, 3.5 | 126.9 ± 25.5 | 5.47x worse |
 
 ## 🔧 Sensors Analyzed
 
-- **43220065 ROS1** and **ROS2** - High-precision proximity sensors
-- **12220031 ROS1** and **ROS2** - Industrial measurement sensors
+- **43220065 Runout Sensor 1** and **Runout Sensor 2** - High-precision proximity sensors
+- **12220031 Runout Sensor 1** and **Runout Sensor 2** - Industrial measurement sensors
 
 ## 🚀 Quick Start
 
@@ -120,19 +138,12 @@ The analysis tests 7 different calibration point configurations:
 
 ## 📈 Sample Output
 
-### Key Results Visualization
+## 📈 Key Achievements
 
-![Step Detection](./outputs/sensor_jumps_detection.png)
-*Automated detection of ROS position changes from continuous sensor data - enabling precise calibration point identification*
-
-![Raw Data Analysis](./outputs/raw_data_analysis.png)
-*Original sensor measurements showing exponential decay characteristics with mathematical interpolation*
-
-![Results Summary](./outputs/comprehensive_summary_table.png)
-*Complete performance comparison showing Far-1 configuration achieving optimal accuracy*
-
-![Error Analysis](./outputs/error_analysis_detailed.png)  
-*RMS error analysis in target operating range (1.5-3.0mm) demonstrating 7.8x improvement*
+✅ **44% accuracy improvement** over standard reference calibration  
+✅ **Systematic analysis framework** for sensor optimization  
+✅ **Automated preprocessing pipeline** for continuous sensor data  
+✅ **Data-driven calibration selection** with statistical validation
 
 ### Complete Analysis Suite
 The tool generates comprehensive analysis including:
@@ -178,7 +189,6 @@ ros-sensor-calibration-optimizer/
 └── outputs/                     # Generated analysis visualizations
     ├── sensor_jumps_detection.png      # Step detection preprocessing
     ├── raw_data_analysis.png           # Original sensor data
-    ├── sensor_measurements_plot.png    # Individual sensor curves
     ├── comprehensive_summary_table.png # Complete results matrix
     ├── calibration_summary_table.png   # Performance rankings
     ├── error_analysis_detailed.png     # Target range accuracy
@@ -193,7 +203,7 @@ ros-sensor-calibration-optimizer/
 - **x**: Distance measurement  
 - **A, B, C**: Optimized calibration coefficients
 
-*Multiple function types were tested (linear, polynomial, logarithmic, exponential). The exponential model provided the best fit for ROS sensor physics.*
+*Multiple function types were tested (linear, polynomial, logarithmic, exponential). The exponential model provided the best fit for runout sensor physics.*
 
 ### Evaluation Metrics & Rationale
 
@@ -216,7 +226,7 @@ ros-sensor-calibration-optimizer/
 This project demonstrates expertise in:
 - 📊 **Data Analysis & Visualization**
 - 🔬 **Scientific Computing & Optimization** 
-- 🤖 **Sensor Systems & Robotics**
+- 🔧 **Industrial Sensor Systems**
 - 📈 **Statistical Analysis & Modeling**
 
 ---
