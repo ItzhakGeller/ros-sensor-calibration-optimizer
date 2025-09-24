@@ -31,12 +31,29 @@ This project performs comprehensive analysis of different calibration range conf
 - **`confluence_calibration_report.xml`** - XML formatted report for Confluence integration
 - **`README.md`** - This documentation file
 
-### Generated Visualizations
-- **`raw_data_analysis.png`** - Raw sensor data visualization
-- **`error_analysis_detailed.png`** - Detailed error analysis charts
-- **`comprehensive_summary_table.png`** - Summary table of all results
-- **`bias_linearity_analysis.png`** - Bias and linearity analysis
-- **`calibration_comparison_plots.png`** - Comparison between different calibration ranges
+## 📊 Generated Visualizations
+
+The analysis produces comprehensive visualizations in the `outputs/` folder:
+
+### Core Analysis Charts
+- **`calibration_comparison_plots.png`** - Side-by-side comparison of all 7 calibration scenarios
+- **`comprehensive_calibration_analysis.png`** - Detailed statistical analysis across all sensors
+- **`error_analysis_detailed.png`** - RMS error breakdown and confidence intervals
+
+### Performance Summary  
+- **`comprehensive_summary_table.png`** - Complete results table with rankings
+- **`calibration_summary_table.png`** - Condensed performance metrics
+
+### Data Quality Analysis
+- **`raw_data_analysis.png`** - Original sensor measurements and data quality
+- **`sensor_measurements_plot.png`** - Individual sensor response curves
+- **`sensor_jumps_detection.png`** - Data anomaly detection and filtering
+
+### Statistical Analysis
+- **`bias_linearity_analysis.png`** - Sensor bias and linearity assessment  
+- **`calibration_range_analysis_comprehensive.png`** - Range-specific performance analysis
+
+> 💡 **Tip**: Browse the [`outputs/`](./outputs/) folder to view all generated charts and analysis results.
 
 ## Test Scenarios
 
@@ -96,11 +113,21 @@ The analysis tests 7 different calibration point configurations:
 
 ## 📈 Sample Output
 
+### Key Results Visualization
+![Calibration Comparison](./outputs/calibration_comparison_plots.png)
+*Comparison of all 7 calibration scenarios showing Far-1 as the optimal configuration*
+
+![Comprehensive Analysis](./outputs/comprehensive_calibration_analysis.png)  
+*Detailed statistical analysis demonstrating 7.8x improvement in sensor accuracy*
+
+### Complete Analysis Suite
 The tool generates comprehensive analysis including:
-- 📊 Performance comparison charts
-- 📋 Statistical summary tables  
-- 🎯 Error analysis visualizations
-- 📝 Detailed calibration recommendations
+- 📊 **Performance comparison charts** - Visual ranking of all calibration methods
+- 📋 **Statistical summary tables** - Quantitative results with confidence intervals
+- 🎯 **Error analysis visualizations** - RMS error breakdown and trend analysis  
+- 📝 **Detailed calibration recommendations** - Data-driven optimization guidance
+
+> 🔍 **[View All Visualizations →](./outputs/)**
 
 ## Data Source
 
