@@ -1,0 +1,23 @@
+# ROS Sensor Calibration Optimizer Dependencies
+# Core data analysis and scientific computing
+numpy>=1.21.0
+pandas>=1.3.0
+scipy>=1.7.0
+
+# Data visualization
+matplotlib>=3.5.0
+seaborn>=0.11.0
+
+# Excel file processing
+openpyxl>=3.0.0
+
+# Additional utilities
+pathlib2>=2.3.0  # For cross-platform path handling
+dataclasses>=0.8  # For structured data classes (Python < 3.7)
+
+# Optional: For enhanced statistical analysis
+statsmodels>=0.12.0
+
+# Development and testing (optional)
+pytest>=6.0.0
+jupyter>=1.0.0
