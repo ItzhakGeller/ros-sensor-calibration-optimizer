@@ -31,29 +31,36 @@ This project performs comprehensive analysis of different calibration range conf
 - **`confluence_calibration_report.xml`** - XML formatted report for Confluence integration
 - **`README.md`** - This documentation file
 
-## 📊 Generated Visualizations
+## 📊 Analysis Process & Visualizations
 
-The analysis produces comprehensive visualizations in the `outputs/` folder:
+The analysis follows a systematic approach from raw data processing to optimal calibration identification:
 
-### Core Analysis Charts
-- **`calibration_comparison_plots.png`** - Side-by-side comparison of all 7 calibration scenarios
-- **`comprehensive_calibration_analysis.png`** - Detailed statistical analysis across all sensors
-- **`error_analysis_detailed.png`** - RMS error breakdown and confidence intervals
+### 1. Data Preprocessing & Quality Control
+**`sensor_jumps_detection.png`** - **Step Detection Algorithm**  
+From continuous sensor measurements, automated detection identifies discrete ROS position changes during data collection. This critical preprocessing step ensures each measurement corresponds to a known distance position, enabling accurate calibration point extraction.
 
-### Performance Summary  
-- **`comprehensive_summary_table.png`** - Complete results table with rankings
-- **`calibration_summary_table.png`** - Condensed performance metrics
+### 2. Raw Data Analysis & Interpolation  
+**`raw_data_analysis.png`** - **Sensor Response Curves**  
+**`sensor_measurements_plot.png`** - **Individual Sensor Characteristics**  
+Display original sensor measurements across the full distance range (0.1-4.0mm) with mathematical interpolation. Shows the exponential decay behavior that characterizes ROS sensor response.
 
-### Data Quality Analysis
-- **`raw_data_analysis.png`** - Original sensor measurements and data quality
-- **`sensor_measurements_plot.png`** - Individual sensor response curves
-- **`sensor_jumps_detection.png`** - Data anomaly detection and filtering
+### 3. Mathematical Model Selection
+Multiple calibration functions were tested (linear, polynomial, logarithmic, exponential). **The exponential decay model (`S = A × exp(-B × x) + C`) demonstrated superior performance** across all sensors and was selected for the optimization study.
 
-### Statistical Analysis
-- **`bias_linearity_analysis.png`** - Sensor bias and linearity assessment  
-- **`calibration_range_analysis_comprehensive.png`** - Range-specific performance analysis
+### 4. Calibration Scenario Comparison
+**`comprehensive_summary_table.png`** - **Complete Results Matrix**  
+**`calibration_summary_table.png`** - **Performance Rankings**  
+Comprehensive comparison of all 7 calibration point configurations showing both raw statistical data and performance scores. Clear identification of Far-1 as the optimal configuration.
 
-> 💡 **Tip**: Browse the [`outputs/`](./outputs/) folder to view all generated charts and analysis results.
+### 5. Target Range Error Analysis
+**`error_analysis_detailed.png`** - **Calibration Accuracy in Operating Zone (1.5-3.0mm)**  
+Detailed RMS error analysis focused on the sensors' intended operating range. Demonstrates why Far-1 configuration achieves superior performance where accuracy matters most.
+
+### 6. Performance Metrics & Validation
+**`calibration_range_analysis_comprehensive.png`** - **RMS Error and R² Correlation Analysis**  
+Final validation showing both RMS error (measurement accuracy) and R² values (model fit quality) across all calibration scenarios.
+
+> 🔍 **[View All Analysis Results →](./outputs/)**
 
 ## Test Scenarios
 
@@ -114,11 +121,18 @@ The analysis tests 7 different calibration point configurations:
 ## 📈 Sample Output
 
 ### Key Results Visualization
-![Calibration Comparison](./outputs/calibration_comparison_plots.png)
-*Comparison of all 7 calibration scenarios showing Far-1 as the optimal configuration*
 
-![Comprehensive Analysis](./outputs/comprehensive_calibration_analysis.png)  
-*Detailed statistical analysis demonstrating 7.8x improvement in sensor accuracy*
+![Step Detection](./outputs/sensor_jumps_detection.png)
+*Automated detection of ROS position changes from continuous sensor data - enabling precise calibration point identification*
+
+![Raw Data Analysis](./outputs/raw_data_analysis.png)
+*Original sensor measurements showing exponential decay characteristics with mathematical interpolation*
+
+![Results Summary](./outputs/comprehensive_summary_table.png)
+*Complete performance comparison showing Far-1 configuration achieving optimal accuracy*
+
+![Error Analysis](./outputs/error_analysis_detailed.png)  
+*RMS error analysis in target operating range (1.5-3.0mm) demonstrating 7.8x improvement*
 
 ### Complete Analysis Suite
 The tool generates comprehensive analysis including:
@@ -155,29 +169,47 @@ Uses exponential decay function: **S = A × exp(-B × x) + C**
 
 ```
 ros-sensor-calibration-optimizer/
-├── range_calibration_analyzer.py    # Main analysis engine
-├── updated_results_summary.py       # Results summary and insights
-├── README.md                       # Project documentation
-├── requirements.txt               # Python dependencies
-├── .gitignore                    # Git ignore rules
-└── outputs/                      # Generated visualizations
-    ├── calibration_comparison_plots.png
-    ├── error_analysis_detailed.png
-    ├── comprehensive_summary_table.png
-    └── ...
+├── README.md                    # Main project documentation
+├── PORTFOLIO.md                 # Portfolio showcase  
+├── requirements.txt             # Python dependencies
+├── .gitignore                   # Git ignore rules
+├── range_calibration_analyzer.py # Main analysis engine
+├── updated_results_summary.py   # Results summary and insights
+└── outputs/                     # Generated analysis visualizations
+    ├── sensor_jumps_detection.png      # Step detection preprocessing
+    ├── raw_data_analysis.png           # Original sensor data
+    ├── sensor_measurements_plot.png    # Individual sensor curves
+    ├── comprehensive_summary_table.png # Complete results matrix
+    ├── calibration_summary_table.png   # Performance rankings
+    ├── error_analysis_detailed.png     # Target range accuracy
+    └── calibration_range_analysis_comprehensive.png # RMS & R² metrics
 ```
 
 ## 🔍 Methodology
 
-**Calibration Model**: Exponential decay function `S = A × exp(-B × x) + C`
+### Mathematical Model
+**Calibration Function**: Exponential decay `S = A × exp(-B × x) + C`
 - **S**: Sensor reading
 - **x**: Distance measurement  
 - **A, B, C**: Optimized calibration coefficients
 
-**Evaluation Criteria**:
-- RMS Error in target range (1.5-3.0mm)
-- R² coefficient of determination
-- Statistical consistency across sensors
+*Multiple function types were tested (linear, polynomial, logarithmic, exponential). The exponential model provided the best fit for ROS sensor physics.*
+
+### Evaluation Metrics & Rationale
+
+**Primary Metric: RMS Error in Target Range (1.5-3.0mm)**
+- **Why**: Sensors must perform optimally in their intended operating zone
+- **Calculation**: √(Σ(predicted - actual)²/n) for measurements within 1.5-3.0mm only
+- **Advantage**: Eliminates bias from extrapolation errors outside working range
+
+**Secondary Metric: R² Coefficient of Determination**  
+- **Purpose**: Validates mathematical model quality and fit consistency
+- **Range**: 0-1 (higher = better correlation between model and measurements)
+- **Use**: Ensures calibration reliability across full measurement range
+
+**Statistical Validation**: Cross-sensor consistency analysis
+- Tests performance across multiple sensor units (4 total)
+- Validates that optimal configuration works universally, not just for specific sensors
 
 ## 📞 Contact & Portfolio
 
